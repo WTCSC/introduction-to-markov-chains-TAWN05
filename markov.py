@@ -1,11 +1,12 @@
 import random
+import re
 
 """
 Create the sample text and the dictionary to store word transitions
 
 TODO: Replace the sample text with a larger text for more interesting results
 """
-text = "Mary had a little lamb its fleece was white as snow"
+text = "Mary, had: a little lamb its fleece was white as snow"
 transitions = {}
 
 """
@@ -17,10 +18,17 @@ Build the Markov Chain
 
 TODO: Handle punctuation and capitalization for better results
 """
+punctuated_text = []
+delimiters = [",", ":", ";", ":"]
 words = text.split()
 for i in range(len(words) - 1):
     current_word = words[i]
     next_word = words[i + 1]
+    for x in current_word:
+        if x == "," or x == ";" or x == ":" or x == ".":
+            current_word.append(punctuated_text)
+            for x in delimiters:
+                current_word = "".join(current_word.split(delimiters))
     if current_word not in transitions:
         transitions[current_word] = []
     transitions[current_word].append(next_word)
@@ -57,4 +65,4 @@ Example usage, generating 10 words starting with "Mary"
 
 TODO: Accept user input for the starting word and number of words to generate
 """
-print(generate_text("Mary", 10))
+print(transitions)
